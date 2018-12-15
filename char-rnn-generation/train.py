@@ -46,12 +46,12 @@ def train(inp, target):
 
     for c in range(args.chunk_len):
         output, hidden = decoder(inp[c], hidden)
-        loss += criterion(output, target[c])
+        loss += criterion(output, target[c:c+1])
 
     loss.backward()
     decoder_optimizer.step()
 
-    return loss.data[0] / args.chunk_len
+    return loss.data / args.chunk_len
 
 def save():
     save_filename = os.path.splitext(os.path.basename(args.filename))[0] + '.pt'
